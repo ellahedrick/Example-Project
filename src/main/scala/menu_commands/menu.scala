@@ -1,16 +1,20 @@
 package menu_commands
 
+import PlayerOrder._
+
 object Menu {
-
+  
+  def initialize() = ???
+  
   def showGameArea : String = {
-    return "fail"
+    Board.show
   }
-
+  
   def showPlayerOrder : String = {
-    return "fail"
+    return PlayerOrder.show
   }
-
-  def advancePlayerOrder : String = {
-    return "fail"
+  
+  def advancePlayerOrder : Unit = {
+    PlayerOrder.advance
   }
-} 
+}
