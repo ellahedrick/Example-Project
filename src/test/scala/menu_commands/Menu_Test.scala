@@ -68,5 +68,7 @@ class Menu_Test extends FunSpec with Matchers {
 
 
     }
+    Deck.debug
   }
 }
+
