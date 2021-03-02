@@ -175,11 +175,13 @@ class Menu_Test extends FunSpec with Matchers {
       
       //*********DO GAME***********************
       it("can do a game that ends when a player wins") {
-        Menu.doGame should be ("Erik")
+        val expectedResult = "Rocco"
+        Menu.doGame should be (expectedResult)
       }
       
     }
-    Deck.debug
+    //Deck.debug
+    
   }
 }
 

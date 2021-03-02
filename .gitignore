@@ -6,3 +6,4 @@ target/
 .cache-tests
 .classpath
 .project 
+!project/scala-2.12/api

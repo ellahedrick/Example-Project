@@ -1,7 +1,8 @@
 package menu_commands
 import scala.util.Random
 
-//******* PLAYER_ORDER *******
+/** creates the deck object (extended from a mutable Queue of type Card)
+   */
 object Deck extends scala.collection.mutable.Queue[Card] {
   
   val discard: List[Card] = List()
@@ -172,21 +173,25 @@ object Deck extends scala.collection.mutable.Queue[Card] {
   this += new Card(" Rent: Red/Ylw",'a',1)
   this += new Card("RRd Readng RRd",'p',2)
   this += new Card(" Rent: Pnk/Org",'a',1)
-  for(i <- 1 to 50) this += new Card("P Wld: ~~ANY~~", 'p',0)
   
   
   
  
-
+  /** return the next card in the deck
+   */
   def deal : Card = {
     return this.dequeue
   }
 
+  /** shuffle the deck
+   */
   def shuffle = {
     //this = util.Random.shuffle(this)
-    util.Random.shuffle(this)
+    //util.Random.shuffle(this)
   }
   
+  /** [Will not be needed in the final game, purely for testing purposes]
+   */
   def debug = {
     
     //Show actual deck
@@ -194,8 +199,7 @@ object Deck extends scala.collection.mutable.Queue[Card] {
       println(card.show)
     }
     
-    
-    //Show random code snipet
+    //Show random code snippet to ease generating a new fixed order
     //for (card <- util.Random.shuffle(this).toArray) 
     //  println("this += new Card(\"" + card.name + "\",\'" + card.variant.toString + "\',"+card.value.toString+")")
 

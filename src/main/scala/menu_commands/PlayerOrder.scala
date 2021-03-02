@@ -1,6 +1,7 @@
 package menu_commands
 
-//******* PLAYER_ORDER *******
+/** creates the PlayerOrder object (extended from a mutable Queue of type Player)
+   */
 object PlayerOrder extends scala.collection.mutable.Queue[Player] {
 
   this += new Player("Emma")
@@ -8,10 +9,14 @@ object PlayerOrder extends scala.collection.mutable.Queue[Player] {
   this += new Player("Grace")
   this += new Player("Erik")
 
+  /** advance to the next player in the order
+   */
   def advance {
     this += this.dequeue
   }
 
+ /** return the current order of players
+   */
   def show : String = {
     var result = ""    
     for (p <- this.toArray) 
@@ -19,6 +24,8 @@ object PlayerOrder extends scala.collection.mutable.Queue[Player] {
     result.substring(0, result.length-2)
   }
 
+  /** return the current player
+   */
   def current : Player = {
     return this.head
   }

@@ -1,5 +1,7 @@
 package menu_commands
 
+/** Creates the board object
+   */
 object Board {
 
   // create the 21 x 21 collection of cells
@@ -10,6 +12,9 @@ object Board {
          j <- 0 until cols
   } cells(i)(j) = new Cell
 
+  
+  /** shows the game board
+   */
   def show : String = {
     
     for {  i <- 0 until rows

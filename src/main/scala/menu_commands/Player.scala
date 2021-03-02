@@ -10,37 +10,11 @@ class Player (val name : String) {
   var properties: List[Card] = List()
   var bank: List[Card] = List()
   
-  /** begin turn (calls any of the other methods to determine best move)
-   */
-  def playTurn = {
-    
-  }
   
   /** respond to another player's action card
    * @param cards the cards to be given up in response to the action
    */
   def actionRespond(cards: List[Card]) = {
-    
-  }
-  
-  /** draw cards from the deck
-   * @param n the number of cards to draw
-   */
-  def draw(n: Int) = {
-    
-  }
-  
-  /** place a card into the player's bank
-   * @param card the card to be deposited
-   */
-  def bankDeposit(card: Card) = {
-    
-  }
-  
-  /** place a property onto the board
-   * @param card the property to be placed
-   */
-  def propertyDeposit(card: Card) = {
     
   }
   
@@ -51,6 +25,8 @@ class Player (val name : String) {
     
   }
   
+  /** check whether the game was won after the turn
+   */
   def checkIsWinner: Boolean = {
   
     var green = 0
@@ -74,7 +50,7 @@ class Player (val name : String) {
   
     for(card <- properties){
       var col = card.name.slice(0, 3)
-      if(col == "Pro") col = card.name.slice(card.name.length-7, card.name.length)
+      if(col == "P W") col = card.name.slice(card.name.length-7, card.name.length)
       if(col == "Brn") brown +=1
       else if(col == "Grn") green += 1
       else if(col == "Cyn") cyan += 1
@@ -144,6 +120,8 @@ class Player (val name : String) {
     else false
   }
 
+/** play the current turn
+   */  
  def doMove : Unit = { 
     
     hand = hand :+ Deck.deal
