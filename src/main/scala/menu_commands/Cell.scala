@@ -7,7 +7,7 @@ class Cell {
   def show = {
     card match {
       case Some(card) => card.show
-      case None => "[          ]"
+      case None => "[                        ]"
     }    
   }
 }

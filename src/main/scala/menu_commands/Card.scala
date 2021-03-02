@@ -9,3 +9,5 @@ class Card (val name: String, val variant : Char, val value : Int) {
     result
   }
 }
+
+// [name (v): 
