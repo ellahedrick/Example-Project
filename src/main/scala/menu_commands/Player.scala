@@ -9,21 +9,10 @@ class Player (val name : String) {
   var hand: List[Card] = List()
   var properties: List[Card] = List()
   var bank: List[Card] = List()
+  var strategy: Strategy = new Agent_PropertyFirst(this)
   
   
-  /** respond to another player's action card
-   * @param cards the cards to be given up in response to the action
-   */
-  def actionRespond(cards: List[Card]) = {
-    
-  }
   
-  /** use an action card
-   * @param card the action card to be used
-   */
-  def playAction(card: Card) = {
-    
-  }
   
   /** check whether the game was won after the turn
    */
@@ -123,47 +112,13 @@ class Player (val name : String) {
 /** play the current turn
    */  
  def doMove : Unit = { 
-    
-    hand = hand :+ Deck.deal
-    hand = hand :+ Deck.deal
-    
-    var counter = 0
-    
-    for (card <- hand){
-      if(counter < 3 && card.variant == 'p'){
-        properties = properties :+ card
-        //println("PPPP" + curPlay.hand)
-
-        hand = hand.filter(_ != card)
-        //println("CCCCC" + curPlay.hand)
-        counter +=1
-      }
-    }
-    
-    for (card <- hand){
-      if(counter < 3 && card.variant == 'm'){
-        bank = bank :+ card
-        //println("BANK" + curPlay.bank)
-        hand = hand.filter(_ != card)
-        //println("Hand5" + curPlay.hand)
-        counter +=1
-      }
-    }
-    
-    for (card <- hand){
-      if(counter < 3 && card.variant == 'a'){
-        bank = bank :+ card
-        hand = hand.filter(_ != card)
-        counter +=1
-      }
-    }
-    
-    if(hand.length < 3){
-      hand = hand :+ Deck.deal
-      hand = hand :+ Deck.deal
-      hand = hand :+ Deck.deal
-    }
-    //println("FINAL:" + curPlay.hand)
-  }
+   strategy.doMove
+ }
+ 
+ /** show the current strategy
+   */
+ def showStrategy : String = {
+   strategy.show
+ }
   
 }

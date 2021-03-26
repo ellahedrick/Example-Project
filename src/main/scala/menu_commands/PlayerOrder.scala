@@ -4,14 +4,20 @@ package menu_commands
    */
 object PlayerOrder extends scala.collection.mutable.Queue[Player] {
 
-  this += new Player("Emma")
-  this += new Player("Rocco")
-  this += new Player("Grace")
-  this += new Player("Erik")
-
+  /** adds players to the queue
+	*/
+  def addPlayers : Unit = {
+    this += new Player("Emma")
+    this += new Player("Rocco")
+    this += new Player("Grace")
+    this += new Player("Erik")
+  }
+  
+  addPlayers
+  
   /** advance to the next player in the order
    */
-  def advance {
+  def advance{
     this += this.dequeue
   }
 

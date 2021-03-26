@@ -11,7 +11,16 @@ object Menu {
   /** initializes the game by dealing cards to each player (will eventually shuffle the deck as well)
    */
   def initialize: Unit = {
+    while(!Deck.isEmpty) Deck.dequeue
+    Deck.createDeck
+    
+    while(!PlayerOrder.isEmpty) PlayerOrder.dequeue
+    PlayerOrder.addPlayers
+    
     for(i <- 0 until 4){
+      PlayerOrder.current.hand = List()
+      PlayerOrder.current.properties = List()
+      PlayerOrder.current.bank = List()
       for(i <- 0 until 5){
         PlayerOrder.current.hand = PlayerOrder.current.hand :+ Deck.deal
       }
@@ -49,6 +58,13 @@ object Menu {
     PlayerOrder.current.checkIsWinner
   }
   
+  /** display the name of the winner
+   */
+  def showWinner: String = {
+    if(hasWinner) winner
+    else "No Winner"
+  }
+  
   /** run through one iteration of each player's move
    */
   def doTurn: Unit = {
@@ -57,7 +73,7 @@ object Menu {
          PlayerOrder.current.doMove
          gameOver = PlayerOrder.current.checkIsWinner
          if(gameOver) winner = PlayerOrder.current.name
-         PlayerOrder.advance
+         else PlayerOrder.advance
        }
      }
   }
@@ -67,6 +83,31 @@ object Menu {
   def doGame: String = {
     while(gameOver == false) doTurn
     Menu.winner
+  }
+  
+  /** set the strategy of a specified player
+   *  @param player the player to assign the new strategy to
+   *  @param strategy the strategy to be assigned
+   */
+  def setStrategy(player: Player, strategy: Strategy): Unit = {
+    player.strategy = strategy
+  }
+  
+  /** display the strategy of the current player
+   */
+  def curStrategy: String = {
+    PlayerOrder.current.showStrategy
+  }
+  
+  /** display the strategies of all players
+   */
+  def showStrategies: String = {
+    var result = "Current Player Strategies:\n"
+    for(i <- 0 until 4){
+      result += PlayerOrder.current.name + ": " + PlayerOrder.current.showStrategy + "\n"
+      PlayerOrder.advance
+    }
+    result
   }
 
 }
