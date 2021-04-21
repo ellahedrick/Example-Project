@@ -7,11 +7,13 @@ import PlayerOrder._
 object Menu {
   var gameOver = false
   var winner = ""
-  var useRandom = true
+  var useRandom = false
   
   /** initializes the game by dealing cards to each player (will eventually shuffle the deck as well)
    */
   def initialize: Unit = {
+    gameOver = false
+    winner = ""
     println("initializing")
     while(!Deck.isEmpty) Deck.dequeue
     Deck.createDeck
@@ -36,10 +38,6 @@ object Menu {
     Board.show
   }
   
-  def changeRandom: String = {
-    useRandom = !useRandom
-    return "Use Fixed Deck"
-  }
   
   /** display the player order
    */

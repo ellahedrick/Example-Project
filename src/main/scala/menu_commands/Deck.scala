@@ -7,7 +7,7 @@ object Deck extends scala.collection.mutable.Queue[Card] {
   
   val seed = 16
   scala.util.Random.setSeed(seed)
-  val discard = new scala.collection.mutable.Queue[Card]
+  var discard = new scala.collection.mutable.Queue[Card]
   var fixedDeck = new scala.collection.mutable.Queue[Card]
   
   

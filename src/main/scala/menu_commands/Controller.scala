@@ -10,13 +10,13 @@ class Controller(view: View, model: Model) {
   
   def shuffle = model.shuffle
   
-  def randomOrder = model.randomOrder
-  
   def showPlayerOrder = model.showPlayerOrder
   
   def advancePlayerOrder = model.advancePlayerOrder
   
-  def initializeGame = model.initializeGame
+  def initializeGame = {
+    model.initializeGame
+  }
   
   def doTurn = model.doTurn
   

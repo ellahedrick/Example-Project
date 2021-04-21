@@ -1,5 +1,6 @@
 package menu_commands
 import scala.swing._
+import event._
 import BorderPanel.Position._
 import java.awt.geom.Rectangle2D
 import java.awt.geom.Ellipse2D
@@ -105,18 +106,22 @@ class View {
           var s1 = new RadioMenuItem("Property-First")
           s1.action = Action("Property-First"){ 
             Menu.setStrategy( playerRef, new Agent_PropertyFirst(playerRef) )
+            update
           }
           var s2 = new RadioMenuItem("Property-Last")
           s2.action = Action("Property-Last"){ 
             Menu.setStrategy( playerRef, new Agent_PropertyLast(playerRef) )
+            update
           }
           var s3 = new RadioMenuItem("Offensive-Money")
           s3.action = Action("Offensive-Money"){ 
             Menu.setStrategy( playerRef, new Agent_OffensiveMoney(playerRef) )
+            update
           }
           var s4 = new RadioMenuItem("Offensive-Property")
           s4.action = Action("Offensive-Property"){ 
             Menu.setStrategy( playerRef, new Agent_OffensiveProperty(playerRef) )
+            update
           }
           bgEmma.buttons += s1
           bgEmma.buttons += s2
@@ -130,18 +135,22 @@ class View {
           var s1 = new RadioMenuItem("Property-First")
           s1.action = Action("Property-First"){ 
             Menu.setStrategy( playerRef, new Agent_PropertyFirst(playerRef) )
+            update
           }
           var s2 = new RadioMenuItem("Property-Last")
           s2.action = Action("Property-Last"){ 
             Menu.setStrategy( playerRef, new Agent_PropertyLast(playerRef) )
+            update
           }
           var s3 = new RadioMenuItem("Offensive-Money")
           s3.action = Action("Offensive-Money"){ 
             Menu.setStrategy( playerRef, new Agent_OffensiveMoney(playerRef) )
+            update
           }
           var s4 = new RadioMenuItem("Offensive-Property")
           s4.action = Action("Offensive-Property"){ 
             Menu.setStrategy( playerRef, new Agent_OffensiveProperty(playerRef) )
+            update
           }
           bgRocco.buttons += s1
           bgRocco.buttons += s2
@@ -155,18 +164,22 @@ class View {
           var s1 = new RadioMenuItem("Property-First")
           s1.action = Action("Property-First"){ 
             Menu.setStrategy( playerRef, new Agent_PropertyFirst(playerRef) )
+            update
           }
           var s2 = new RadioMenuItem("Property-Last")
           s2.action = Action("Property-Last"){ 
             Menu.setStrategy( playerRef, new Agent_PropertyLast(playerRef) )
+            update
           }
           var s3 = new RadioMenuItem("Offensive-Money")
           s3.action = Action("Offensive-Money"){ 
             Menu.setStrategy( playerRef, new Agent_OffensiveMoney(playerRef) )
+            update
           }
           var s4 = new RadioMenuItem("Offensive-Property")
           s4.action = Action("Offensive-Property"){ 
             Menu.setStrategy( playerRef, new Agent_OffensiveProperty(playerRef) )
+            update
           }
           bgGrace.buttons += s1
           bgGrace.buttons += s2
@@ -180,18 +193,22 @@ class View {
           var s1 = new RadioMenuItem("Property-First")
           s1.action = Action("Property-First"){ 
             Menu.setStrategy( playerRef, new Agent_PropertyFirst(playerRef) )
+            update
           }
           var s2 = new RadioMenuItem("Property-Last")
           s2.action = Action("Property-Last"){ 
             Menu.setStrategy( playerRef, new Agent_PropertyLast(playerRef) )
+            update
           }
           var s3 = new RadioMenuItem("Offensive-Money")
           s3.action = Action("Offensive-Money"){ 
             Menu.setStrategy( playerRef, new Agent_OffensiveMoney(playerRef) )
+            update
           }
           var s4 = new RadioMenuItem("Offensive-Property")
           s4.action = Action("Offensive-Property"){ 
             Menu.setStrategy( playerRef, new Agent_OffensiveProperty(playerRef) )
+            update
           }
           bgErik.buttons += s1
           bgErik.buttons += s2
@@ -200,6 +217,13 @@ class View {
           bgErik.select(s1)
           contents ++= bgErik.buttons
         }
+      }
+      val checkRandom = new CheckBox("Random Deck")
+      contents += checkRandom
+      listenTo(checkRandom)
+      reactions += {
+        case ButtonClicked(`checkRandom`) =>
+          Menu.useRandom = checkRandom.selected
       }
     }
     contents = gameArea
@@ -213,13 +237,13 @@ class View {
     frame.repaint
     println("repainting")
     for(panel <- playerHands) panel.repaint
+    flippedCard.repaint
   }
 
   
   //******* CARDPANEL ******* 
     
   class CardPanel extends Panel {
-
     var image = javax.imageio.ImageIO.read(new java.io.File("resources/empty.jpg"))
     
     def showAsEmpty {
@@ -228,11 +252,12 @@ class View {
     }
     
     def changeCard(card : Card) {
-      image = javax.imageio.ImageIO.read(new java.io.File("resources/empty.jpg"))
-      this.repaint 
+      image = javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(Deck.discard.head.name, Deck.discard.head.value)+ ".jpg"))
+          this.repaint 
     }
     
     override def paint(g: Graphics2D) {
+      if(Deck.discard.length > 0) image = javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(Deck.discard.head.name, Deck.discard.head.value)+ ".jpg"))
       g.drawImage(image, 18, 48, null)
     }
   }
@@ -256,6 +281,58 @@ class View {
       g.drawImage(image, 54, 48, null)
     }
   }     
+ 
+  def getFile(cardName: String, cardMoney: Int): String = (cardName, cardMoney) match {
+    case ("    -Money-   ", 1) => "1m"
+    case ("    -Money-   ", 2) => "2m"
+    case ("    -Money-   ", 3) => "3m"
+    case ("    -Money-   ", 4) => "4m"
+    case ("    -Money-   ", 5) => "5m"
+    case ("    -Money-   ", 10) => "10m"
+    case ("     Money    ", 1) => "s1m"
+    case ("     Money    ", 2) => "s2m"
+    case ("     Money    ", 3) => "s3m"
+    case ("     Money    ", 4) => "s4m"
+    case ("     Money    ", 5) => "s5m"
+    case ("    Property  ", 3) => "sp3"
+    case ("    Property  ", 5) => "sp5"
+    case ("P Wld: ~~ANY~~", _) => "wildAny"
+    case ("P Wld: Blu/Grn", _) => "wildBlueGreen"
+    case ("P Wld: Cyn/Brn", _) => "wildCyanBrown"
+    case ("P Wld: Grn/RRd", _) => "wildGreenRrd"
+    case ("P Wld: Cyn/RRd", _) => "wildCyanRrd"
+    case ("P Wld: Utl/RRd", _) => "wildUtilRrd"
+    case ("P Wld: Ylw/Red", _) => "wildYellowRed"
+    case ("P Wld: Org/Pnk", _) => "wildOrangePink"
+    case ("Brn Baltic Ave", _) => "baltic"
+    case ("Brn Medtrn Ave", _) => "mediterranean"
+    case ("Blu Boardwalk ", _) => "boardwalk"
+    case ("Blu Park Place", _) => "parkPlace"
+    case ("Grn N Car. Ave", _) => "northCarolina"
+    case ("Grn Pacifc Ave", _) => "pacific"
+    case ("Grn Pnslyv Ave", _) => "pennsylvaniaAve"
+    case ("Cyn Connec Ave", _) => "connecticut"
+    case ("Cyn Orient Ave", _) => "oriental"
+    case ("Cyn Vermnt Ave", _) => "vermont"
+    case ("Org NwYork Ave", _) => "newYork"
+    case ("Org St Jms Plc", _) => "stJames"
+    case ("Org Tennes Ave", _) => "tennes"
+    case ("Pnk St Chr Plc", _) => "stCharlesPlace"
+    case ("Pnk Virgin Ave", _) => "virginia"
+    case ("Pnk States Ave", _) => "states"
+    case ("RRd Short Line", _) => "shortLineRailroad"
+    case ("RRd B & O RRd ", _) => "boRailroad"
+    case ("RRd Readng RRd", _) => "readingRailroad"
+    case ("RRd Pnslyv RRd", _) => "pennsylvaniaRailroad"
+    case ("Red Kentky Ave", _) => "kentucky"
+    case ("Red Indian Ave", _) => "indian"
+    case ("Red Ilnois Ave", _) => "illinois"
+    case ("Utl WaterWorks", _) => "waterworks"
+    case ("Utl ElctrCmpny", _) => "electricCompany"
+    case ("Ylw Ventnr Ave", _) => "ventnor"
+    case ("Ylw Marvin Gdn", _) => "marvinGardens"
+    case ("Ylw Atlntc Ave", _) => "atlantic"
+  }  
   
   //******* PLAYERHANDPANEL ******* 
   class PlayerHandPanel(name: String) extends Panel {
@@ -266,60 +343,7 @@ class View {
     var propertyImages = new ArrayBuffer[BufferedImage]
     var bankImages = new ArrayBuffer[BufferedImage]
     //images += javax.imageio.ImageIO.read(new java.io.File("resources/empty.jpg"))
-
-    def getFile(cardName: String, cardMoney: Int): String = (cardName, cardMoney) match {
-      case ("    -Money-   ", 1) => "1m"
-      case ("    -Money-   ", 2) => "2m"
-      case ("    -Money-   ", 3) => "3m"
-      case ("    -Money-   ", 4) => "4m"
-      case ("    -Money-   ", 5) => "5m"
-      case ("    -Money-   ", 10) => "10m"
-      case ("     Money    ", 1) => "s1m"
-      case ("     Money    ", 2) => "s2m"
-      case ("     Money    ", 3) => "s3m"
-      case ("     Money    ", 4) => "s4m"
-      case ("     Money    ", 5) => "s5m"
-      case ("    Property  ", 3) => "sp3"
-      case ("    Property  ", 5) => "sp5"
-      case ("P Wld: ~~ANY~~", _) => "wildAny"
-      case ("P Wld: Blu/Grn", _) => "wildBlueGreen"
-      case ("P Wld: Cyn/Brn", _) => "wildCyanBrown"
-      case ("P Wld: Grn/RRd", _) => "wildGreenRrd"
-      case ("P Wld: Cyn/RRd", _) => "wildCyanRrd"
-      case ("P Wld: Utl/RRd", _) => "wildUtilRrd"
-      case ("P Wld: Ylw/Red", _) => "wildYellowRed"
-      case ("P Wld: Org/Pnk", _) => "wildOrangePink"
-      case ("Brn Baltic Ave", _) => "baltic"
-      case ("Brn Medtrn Ave", _) => "mediterranean"
-      case ("Blu Boardwalk ", _) => "boardwalk"
-      case ("Blu Park Place", _) => "parkPlace"
-      case ("Grn N Car. Ave", _) => "northCarolina"
-      case ("Grn Pacifc Ave", _) => "pacific"
-      case ("Grn Pnslyv Ave", _) => "pennsylvaniaAve"
-      case ("Cyn Connec Ave", _) => "connecticut"
-      case ("Cyn Orient Ave", _) => "oriental"
-      case ("Cyn Vermnt Ave", _) => "vermont"
-      case ("Org NwYork Ave", _) => "newYork"
-      case ("Org St Jms Plc", _) => "stJames"
-      case ("Org Tennes Ave", _) => "tennes"
-      case ("Pnk St Chr Plc", _) => "stCharlesPlace"
-      case ("Pnk Virgin Ave", _) => "virginia"
-      case ("Pnk States Ave", _) => "states"
-      case ("RRd Short Line", _) => "shortLineRailroad"
-      case ("RRd B & O RRd ", _) => "boRailroad"
-      case ("RRd Readng RRd", _) => "readingRailroad"
-      case ("RRd Pnslyv RRd", _) => "pennsylvaniaRailroad"
-      case ("Red Kentky Ave", _) => "kentucky"
-      case ("Red Indian Ave", _) => "indian"
-      case ("Red Ilnois Ave", _) => "illinois"
-      case ("Utl WaterWorks", _) => "waterworks"
-      case ("Utl ElctrCmpny", _) => "electricCompany"
-      case ("Ylw Ventnr Ave", _) => "ventnor"
-      case ("Ylw Marvin Gdn", _) => "marvinGardens"
-      case ("Ylw Atlntc Ave", _) => "atlantic"
-  }  
-
-    
+ 
     override def paint(g: Graphics2D) {
       if(PlayerOrder(0).name == name){
         //println(PlayerOrder(0).hand.length)

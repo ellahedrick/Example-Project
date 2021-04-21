@@ -16,8 +16,6 @@ class Model {
   /** Calls advancePlayerOrder within Menu */
   def advancePlayerOrder = Menu.advancePlayerOrder
   
-  def randomOrder = Menu.changeRandom
-  
   /** Calls initializeGame within Menu */
   def initializeGame = Menu.initialize
   
