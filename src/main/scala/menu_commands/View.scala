@@ -149,7 +149,7 @@ class View extends MainFrame {
       } // end Menu 1
     } // end MenuBar
 
-    size = new Dimension(500, 500)
+    size = new Dimension(1800, 1000)
     visible = true
   }
 
