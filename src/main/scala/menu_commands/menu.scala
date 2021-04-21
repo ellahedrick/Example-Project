@@ -7,6 +7,7 @@ import PlayerOrder._
 object Menu {
   var gameOver = false
   var winner = ""
+  var useRandom = true
   
   /** initializes the game by dealing cards to each player (will eventually shuffle the deck as well)
    */
