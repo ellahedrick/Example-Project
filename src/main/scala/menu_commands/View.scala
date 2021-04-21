@@ -56,12 +56,20 @@ class View {
 
   val hiddenDeck = new HiddenCardPanel
   
+  val winnerDeck = new WinnerPanel
+  
   val deckSpaces = new BoxPanel(Orientation.Horizontal) {
-    contents += hiddenDeck
-    contents += flippedCard   
+    if(Menu.hasWinner) {
+      contents += winnerDeck
+    }
+    else{
+      contents += hiddenDeck
+      contents += flippedCard 
+    }
     background = Color.black
     preferredSize = new Dimension(300,200)
   }
+
   
   val cardSpaces = new BorderPanel {    
     layout += new Label("Erik") -> West      
@@ -243,6 +251,16 @@ class View {
   
   //******* CARDPANEL ******* 
     
+  class WinnerPanel extends Panel {
+    var image = javax.imageio.ImageIO.read(new java.io.File("resources/empty.jpg"))
+    if(Menu.hasWinner){
+      image = javax.imageio.ImageIO.read(new java.io.File("resources/" + Menu.winner + ".jpg"))
+    }
+    override def paint(g: Graphics2D) {
+      g.drawImage(image, 54, 48, null)
+    }
+  }
+  
   class CardPanel extends Panel {
     var image = javax.imageio.ImageIO.read(new java.io.File("resources/empty.jpg"))
     
@@ -342,84 +360,93 @@ class View {
     var handImages = new ArrayBuffer[BufferedImage]
     var propertyImages = new ArrayBuffer[BufferedImage]
     var bankImages = new ArrayBuffer[BufferedImage]
+    var image = javax.imageio.ImageIO.read(new java.io.File("resources/empty.jpg"))
+    
     //images += javax.imageio.ImageIO.read(new java.io.File("resources/empty.jpg"))
  
     override def paint(g: Graphics2D) {
-      if(PlayerOrder(0).name == name){
-        //println(PlayerOrder(0).hand.length)
-        for(card <- PlayerOrder(0).hand){
-          handImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
-        }
-        for(card <- PlayerOrder(0).bank){
-          bankImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
-        }
-        for(card <- PlayerOrder(0).properties){
-          propertyImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
-        }
+      if(Menu.hasWinner){
+        image = javax.imageio.ImageIO.read(new java.io.File("resources/"+Menu.winner+".jpg"))
+        if (name == "Rocco" || name == "Erik") g.drawImage(image, 300, 70, null)
+        else g.drawImage(image, 800, 70, null)
       }
-      if(PlayerOrder(1).name == name){
-        for(card <- PlayerOrder(1).hand){
-          handImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+      else{
+        if(PlayerOrder(0).name == name){
+          //println(PlayerOrder(0).hand.length)
+          for(card <- PlayerOrder(0).hand){
+            handImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+          }
+          for(card <- PlayerOrder(0).bank){
+            bankImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+          }
+          for(card <- PlayerOrder(0).properties){
+            propertyImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+          }
         }
-        for(card <- PlayerOrder(1).bank){
-          bankImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+        if(PlayerOrder(1).name == name){
+          for(card <- PlayerOrder(1).hand){
+            handImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+          }
+          for(card <- PlayerOrder(1).bank){
+            bankImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+          }
+          for(card <- PlayerOrder(1).properties){
+            propertyImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+          }
         }
-        for(card <- PlayerOrder(1).properties){
-          propertyImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+        if(PlayerOrder(2).name == name){
+          for(card <- PlayerOrder(2).hand){
+            handImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+          }
+          for(card <- PlayerOrder(2).bank){
+            bankImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+          }
+          for(card <- PlayerOrder(2).properties){
+            propertyImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+          }
         }
-      }
-      if(PlayerOrder(2).name == name){
-        for(card <- PlayerOrder(2).hand){
-          handImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+        if(PlayerOrder(3).name == name){
+          for(card <- PlayerOrder(3).hand){
+            handImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+          }
+          for(card <- PlayerOrder(3).bank){
+            bankImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+          }
+          for(card <- PlayerOrder(3).properties){
+            propertyImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+          }
         }
-        for(card <- PlayerOrder(2).bank){
-          bankImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+        //println("repainting panel")
+        var xOffset = 100
+        var yOffset = 0
+        //println(handImages.length)
+        for (image <- handImages) {
+          //println(images.length)
+          if (name == "Rocco" || name == "Erik") g.drawImage(image, xOffset, 0, null)
+          else g.drawImage(image, xOffset + 500, 0, null)
+          xOffset += 90
         }
-        for(card <- PlayerOrder(2).properties){
-          propertyImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+        xOffset = 100
+        yOffset = 100
+        for (image <- bankImages) {
+          //println(images.length)
+          if (name == "Rocco" || name == "Erik") g.drawImage(image, xOffset, yOffset, null)
+          else g.drawImage(image, xOffset+500, yOffset, null)
+          xOffset += 90
         }
-      }
-      if(PlayerOrder(3).name == name){
-        for(card <- PlayerOrder(3).hand){
-          handImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+        xOffset = 100
+        yOffset = 200
+        for (image <- propertyImages) {
+          //println(images.length)
+          if (name == "Rocco" || name == "Erik") g.drawImage(image, xOffset, yOffset, null)
+          else g.drawImage(image, xOffset+500, yOffset, null)
+          xOffset += 90
         }
-        for(card <- PlayerOrder(3).bank){
-          bankImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
-        }
-        for(card <- PlayerOrder(3).properties){
-          propertyImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
-        }
-      }
-      //println("repainting panel")
-      var xOffset = 100
-      var yOffset = 0
-      //println(handImages.length)
-      for (image <- handImages) {
-        //println(images.length)
-        if (name == "Rocco" || name == "Erik") g.drawImage(image, xOffset, 0, null)
-        else g.drawImage(image, xOffset + 500, 0, null)
-        xOffset += 90
-      }
-      xOffset = 100
-      yOffset = 100
-      for (image <- bankImages) {
-        //println(images.length)
-        if (name == "Rocco" || name == "Erik") g.drawImage(image, xOffset, yOffset, null)
-        else g.drawImage(image, xOffset+500, yOffset, null)
-        xOffset += 90
-      }
-      xOffset = 100
-      yOffset = 200
-      for (image <- propertyImages) {
-        //println(images.length)
-        if (name == "Rocco" || name == "Erik") g.drawImage(image, xOffset, yOffset, null)
-        else g.drawImage(image, xOffset+500, yOffset, null)
-        xOffset += 90
-      }
-      handImages.clear
-      propertyImages.clear
-      bankImages.clear
-    }    
+        handImages.clear
+        propertyImages.clear
+        bankImages.clear
+      }    
+    }
   } 
   
 }
