@@ -1,5 +1,6 @@
 package menu_commands
 
+
 /** A model in the MVC architecture
 */
 class Model {
@@ -7,11 +8,15 @@ class Model {
   /** Calls showGameArea within Menu */
   def showGameArea = Menu.showGameArea
   
+  def shuffle = Deck.shuffle
+  
   /** Calls showPlayerOrder within Menu */
   def showPlayerOrder = Menu.showPlayerOrder
   
   /** Calls advancePlayerOrder within Menu */
   def advancePlayerOrder = Menu.advancePlayerOrder
+  
+  def randomOrder = Menu.changeRandom
   
   /** Calls initializeGame within Menu */
   def initializeGame = Menu.initialize

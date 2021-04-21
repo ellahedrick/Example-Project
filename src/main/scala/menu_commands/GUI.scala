@@ -15,7 +15,7 @@ object Demo {
     val view  = new View   
     val controller = new Controller(view, model)
     
-    view.init(controller)    
+    view.init(controller, model)    
   }
   
 }

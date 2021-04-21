@@ -72,7 +72,7 @@ object Deck extends scala.collection.mutable.Queue[Card] {
     this += new Card("Utl ElctrCmpny", 'p',2)
     this += new Card("Ylw Ventnr Ave", 'p',3)
     this += new Card("Ylw Marvin Gdn", 'p',3)
-    this += new Card("Grn Atlntc Ave", 'p',3)
+    this += new Card("Ylw Atlntc Ave", 'p',3)
     this.shuffle
     if(fixedDeck.isEmpty) for(card <- this) fixedDeck += card
   }

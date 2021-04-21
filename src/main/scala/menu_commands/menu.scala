@@ -12,6 +12,7 @@ object Menu {
   /** initializes the game by dealing cards to each player (will eventually shuffle the deck as well)
    */
   def initialize: Unit = {
+    println("initializing")
     while(!Deck.isEmpty) Deck.dequeue
     Deck.createDeck
     
@@ -33,6 +34,11 @@ object Menu {
    */
   def showGameArea : String = {
     Board.show
+  }
+  
+  def changeRandom: String = {
+    useRandom = !useRandom
+    return "Use Fixed Deck"
   }
   
   /** display the player order
@@ -69,6 +75,7 @@ object Menu {
   /** run through one iteration of each player's move
    */
   def doTurn: Unit = {
+    println("doing Turn")
      for(i <- 0 until 4){
        if(gameOver == false){
          PlayerOrder.current.doMove
@@ -82,7 +89,9 @@ object Menu {
   /** run the entire game and return the name of the winner
    */
   def doGame: String = {
+    println("doing game")
     while(gameOver == false) doTurn
+    println(Menu.winner)
     Menu.winner
   }
   
