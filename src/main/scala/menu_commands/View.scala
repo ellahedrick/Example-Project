@@ -1,6 +1,7 @@
 package menu_commands
 
 import scala.swing._
+import java.awt.Font
 
 /** A view in the MVC architecture
 */
@@ -10,6 +11,7 @@ class View extends MainFrame {
 
   // Components
   val textArea = new TextArea
+  textArea.font = new Font("Monospaced", Font.PLAIN, 11)
 
   /**
    * initializes the view
@@ -33,6 +35,35 @@ class View extends MainFrame {
         contents += new MenuItem(controller.doMove)
         contents += new MenuItem(controller.doTurn)
         contents += new MenuItem(controller.doGame)
+        contents += new Separator
+        contents += new MenuItem(controller.showStrategies)
+        contents += new Menu("Set Strategies") {
+          contents += new Menu("Emma") {
+            contents += new MenuItem("Property-First")
+            contents += new MenuItem("Property-Last")
+            contents += new MenuItem("Offensive-Money")
+            contents += new MenuItem("Offensive-Property")
+            //contents += new RadioMenuItem(controller.setStrategy(PlayerOrder.find(_))
+          }
+          contents += new Menu("Rocco") {
+            contents += new MenuItem("Property-First")
+            contents += new MenuItem("Property-Last")
+            contents += new MenuItem("Offensive-Money")
+            contents += new MenuItem("Offensive-Property")
+          }
+          contents += new Menu("Grace") {
+            contents += new MenuItem("Property-First")
+            contents += new MenuItem("Property-Last")
+            contents += new MenuItem("Offensive-Money")
+            contents += new MenuItem("Offensive-Property")
+          }
+          contents += new Menu("Erik") {
+            contents += new MenuItem("Property-First")
+            contents += new MenuItem("Property-Last")
+            contents += new MenuItem("Offensive-Money")
+            contents += new MenuItem("Offensive-Property")
+          }
+        }
         contents += new Separator
         contents += new MenuItem(controller.exit) // end Exit menuItem
       } // end Menu 1

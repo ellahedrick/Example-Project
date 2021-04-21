@@ -36,7 +36,13 @@ class Controller(view: View, model: Model) {
     model.doGame
   }
   
+  def showStrategies = Action("Show Strategies"){
+    model.showStrategies
+  }
   
+  def setStrategy(player: Player, strategy: Strategy) = Action("Property First"){
+    
+  }
 
   def exit = Action("Exit") {
     sys.exit(0)
