@@ -41,7 +41,7 @@ class Controller(view: View, model: Model) {
   }
   
   def setStrategy(player: Player, strategy: Strategy) = Action("Property First"){
-    
+    model.setStrategy(player, strategy)
   }
 
   def exit = Action("Exit") {

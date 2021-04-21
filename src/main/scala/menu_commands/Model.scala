@@ -28,8 +28,10 @@ class Model {
   /** Calls doGame within Menu */
   def doGame = Menu.doGame
   
+  /** Calls showStrategies within Menu */
   def showStrategies = Menu.showStrategies
   
+  /** Calls setStrategy within Menu */
   def setStrategy(player: Player, strategy: Strategy) = Menu.setStrategy(player, strategy)
   
 }

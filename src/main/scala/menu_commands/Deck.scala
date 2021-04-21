@@ -159,7 +159,7 @@ object Deck extends scala.collection.mutable.Queue[Card] {
     this += new Card("Brn Medtrn Ave",'p',1)
     this += new Card("    Property  ",'a',5)
     this += new Card("P Wld: Utl/RRd",'p',2)
-    this += new Card("Grn Atlntc Ave",'p',3)
+    this += new Card("Ylw Atlntc Ave",'p',3)
     this += new Card("    Property  ",'a',3)
     this += new Card("     Money    ",'a',3)
     this += new Card("    -Money-   ",'m',2)

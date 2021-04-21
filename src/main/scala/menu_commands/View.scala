@@ -12,6 +12,11 @@ class View extends MainFrame {
   // Components
   val textArea = new TextArea
   textArea.font = new Font("Monospaced", Font.PLAIN, 11)
+  
+  var bgEmma = new ButtonGroup()
+  var bgRocco = new ButtonGroup()
+  var bgGrace = new ButtonGroup()
+  var bgErik = new ButtonGroup()
 
   /**
    * initializes the view
@@ -39,29 +44,104 @@ class View extends MainFrame {
         contents += new MenuItem(controller.showStrategies)
         contents += new Menu("Set Strategies") {
           contents += new Menu("Emma") {
-            contents += new MenuItem("Property-First")
-            contents += new MenuItem("Property-Last")
-            contents += new MenuItem("Offensive-Money")
-            contents += new MenuItem("Offensive-Property")
-            //contents += new RadioMenuItem(controller.setStrategy(PlayerOrder.find(_))
+            val playerRef = PlayerOrder.find(p => {p.name == "Emma"}).get
+            var s1 = new RadioMenuItem("Property-First")
+            s1.action = Action("Property-First"){ 
+              controller.setStrategy( playerRef, new Agent_PropertyFirst(playerRef) )
+            }
+            var s2 = new RadioMenuItem("Property-Last")
+            s2.action = Action("Property-Last"){ 
+              controller.setStrategy( playerRef, new Agent_PropertyLast(playerRef) )
+            }
+            var s3 = new RadioMenuItem("Offensive-Money")
+            s3.action = Action("Offensive-Money"){ 
+              controller.setStrategy( playerRef, new Agent_OffensiveMoney(playerRef) )
+            }
+            var s4 = new RadioMenuItem("Offensive-Property")
+            s4.action = Action("Offensive-Property"){ 
+              controller.setStrategy( playerRef, new Agent_OffensiveProperty(playerRef) )
+            }
+            bgEmma.buttons += s1
+            bgEmma.buttons += s2
+            bgEmma.buttons += s3
+            bgEmma.buttons += s4
+            bgEmma.select(s1)
+            contents ++= bgEmma.buttons
           }
           contents += new Menu("Rocco") {
-            contents += new MenuItem("Property-First")
-            contents += new MenuItem("Property-Last")
-            contents += new MenuItem("Offensive-Money")
-            contents += new MenuItem("Offensive-Property")
+            val playerRef = PlayerOrder.find(p => {p.name == "Rocco"}).get
+            var s1 = new RadioMenuItem("Property-First")
+            s1.action = Action("Property-First"){ 
+              controller.setStrategy( playerRef, new Agent_PropertyFirst(playerRef) )
+            }
+            var s2 = new RadioMenuItem("Property-Last")
+            s2.action = Action("Property-Last"){ 
+              controller.setStrategy( playerRef, new Agent_PropertyLast(playerRef) )
+            }
+            var s3 = new RadioMenuItem("Offensive-Money")
+            s3.action = Action("Offensive-Money"){ 
+              controller.setStrategy( playerRef, new Agent_OffensiveMoney(playerRef) )
+            }
+            var s4 = new RadioMenuItem("Offensive-Property")
+            s4.action = Action("Offensive-Property"){ 
+              controller.setStrategy( playerRef, new Agent_OffensiveProperty(playerRef) )
+            }
+            bgRocco.buttons += s1
+            bgRocco.buttons += s2
+            bgRocco.buttons += s3
+            bgRocco.buttons += s4
+            bgRocco.select(s1)
+            contents ++= bgRocco.buttons
           }
           contents += new Menu("Grace") {
-            contents += new MenuItem("Property-First")
-            contents += new MenuItem("Property-Last")
-            contents += new MenuItem("Offensive-Money")
-            contents += new MenuItem("Offensive-Property")
+            val playerRef = PlayerOrder.find(p => {p.name == "Grace"}).get
+            var s1 = new RadioMenuItem("Property-First")
+            s1.action = Action("Property-First"){ 
+              controller.setStrategy( playerRef, new Agent_PropertyFirst(playerRef) )
+            }
+            var s2 = new RadioMenuItem("Property-Last")
+            s2.action = Action("Property-Last"){ 
+              controller.setStrategy( playerRef, new Agent_PropertyLast(playerRef) )
+            }
+            var s3 = new RadioMenuItem("Offensive-Money")
+            s3.action = Action("Offensive-Money"){ 
+              controller.setStrategy( playerRef, new Agent_OffensiveMoney(playerRef) )
+            }
+            var s4 = new RadioMenuItem("Offensive-Property")
+            s4.action = Action("Offensive-Property"){ 
+              controller.setStrategy( playerRef, new Agent_OffensiveProperty(playerRef) )
+            }
+            bgGrace.buttons += s1
+            bgGrace.buttons += s2
+            bgGrace.buttons += s3
+            bgGrace.buttons += s4
+            bgGrace.select(s1)
+            contents ++= bgGrace.buttons
           }
           contents += new Menu("Erik") {
-            contents += new MenuItem("Property-First")
-            contents += new MenuItem("Property-Last")
-            contents += new MenuItem("Offensive-Money")
-            contents += new MenuItem("Offensive-Property")
+            val playerRef = PlayerOrder.find(p => {p.name == "Erik"}).get
+            var s1 = new RadioMenuItem("Property-First")
+            s1.action = Action("Property-First"){ 
+              controller.setStrategy( playerRef, new Agent_PropertyFirst(playerRef) )
+            }
+            var s2 = new RadioMenuItem("Property-Last")
+            s2.action = Action("Property-Last"){ 
+              controller.setStrategy( playerRef, new Agent_PropertyLast(playerRef) )
+            }
+            var s3 = new RadioMenuItem("Offensive-Money")
+            s3.action = Action("Offensive-Money"){ 
+              controller.setStrategy( playerRef, new Agent_OffensiveMoney(playerRef) )
+            }
+            var s4 = new RadioMenuItem("Offensive-Property")
+            s4.action = Action("Offensive-Property"){ 
+              controller.setStrategy( playerRef, new Agent_OffensiveProperty(playerRef) )
+            }
+            bgErik.buttons += s1
+            bgErik.buttons += s2
+            bgErik.buttons += s3
+            bgErik.buttons += s4
+            bgErik.select(s1)
+            contents ++= bgErik.buttons
           }
         }
         contents += new Separator
