@@ -17,6 +17,10 @@ class View {
 
   var controller: Option[Controller] = None
   var model: Option[Model] = None
+  var bgEmma = new ButtonGroup()
+  var bgRocco = new ButtonGroup()
+  var bgGrace = new ButtonGroup()
+  var bgErik = new ButtonGroup()
 
   //******* init *******  
   def init(ctr: Controller, mod: Model) {
@@ -26,11 +30,13 @@ class View {
   
   
   //******* View components ******* 
-  
   val buttons = new BoxPanel(Orientation.Horizontal) {
     contents += new Button(Action("Initialize Game") { 
       controller.get.initializeGame
       controller.get.showGame
+    })
+    contents += new Button(Action("Advance Player Order") { 
+      controller.get.advancePlayerOrder
     })
     contents += new Button(Action("Do Turn") { 
       controller.get.doTurn
@@ -40,9 +46,10 @@ class View {
       controller.get.doGame
       controller.get.showGame
     })
-    contents += new Button(Action("Reset") { 
+    contents += new Button(Action("Exit") { 
       controller.get.exit
     })  }
+    
     
   var flippedCard = new CardPanel
 
@@ -91,10 +98,114 @@ class View {
   //******* MainFrame *******   
   val frame = new MainFrame {
     title = "Card Game"
+    menuBar = new MenuBar {
+      contents += new Menu("Set Player Strategies") {
+        contents += new Menu("Emma") {
+          val playerRef = PlayerOrder.find(p => {p.name == "Emma"}).get
+          var s1 = new RadioMenuItem("Property-First")
+          s1.action = Action("Property-First"){ 
+            Menu.setStrategy( playerRef, new Agent_PropertyFirst(playerRef) )
+          }
+          var s2 = new RadioMenuItem("Property-Last")
+          s2.action = Action("Property-Last"){ 
+            Menu.setStrategy( playerRef, new Agent_PropertyLast(playerRef) )
+          }
+          var s3 = new RadioMenuItem("Offensive-Money")
+          s3.action = Action("Offensive-Money"){ 
+            Menu.setStrategy( playerRef, new Agent_OffensiveMoney(playerRef) )
+          }
+          var s4 = new RadioMenuItem("Offensive-Property")
+          s4.action = Action("Offensive-Property"){ 
+            Menu.setStrategy( playerRef, new Agent_OffensiveProperty(playerRef) )
+          }
+          bgEmma.buttons += s1
+          bgEmma.buttons += s2
+          bgEmma.buttons += s3
+          bgEmma.buttons += s4
+          bgEmma.select(s1)
+          contents ++= bgEmma.buttons
+        }
+        contents += new Menu("Rocco") {
+          val playerRef = PlayerOrder.find(p => {p.name == "Rocco"}).get
+          var s1 = new RadioMenuItem("Property-First")
+          s1.action = Action("Property-First"){ 
+            Menu.setStrategy( playerRef, new Agent_PropertyFirst(playerRef) )
+          }
+          var s2 = new RadioMenuItem("Property-Last")
+          s2.action = Action("Property-Last"){ 
+            Menu.setStrategy( playerRef, new Agent_PropertyLast(playerRef) )
+          }
+          var s3 = new RadioMenuItem("Offensive-Money")
+          s3.action = Action("Offensive-Money"){ 
+            Menu.setStrategy( playerRef, new Agent_OffensiveMoney(playerRef) )
+          }
+          var s4 = new RadioMenuItem("Offensive-Property")
+          s4.action = Action("Offensive-Property"){ 
+            Menu.setStrategy( playerRef, new Agent_OffensiveProperty(playerRef) )
+          }
+          bgRocco.buttons += s1
+          bgRocco.buttons += s2
+          bgRocco.buttons += s3
+          bgRocco.buttons += s4
+          bgRocco.select(s1)
+          contents ++= bgRocco.buttons
+        }
+        contents += new Menu("Grace") {
+          val playerRef = PlayerOrder.find(p => {p.name == "Grace"}).get
+          var s1 = new RadioMenuItem("Property-First")
+          s1.action = Action("Property-First"){ 
+            Menu.setStrategy( playerRef, new Agent_PropertyFirst(playerRef) )
+          }
+          var s2 = new RadioMenuItem("Property-Last")
+          s2.action = Action("Property-Last"){ 
+            Menu.setStrategy( playerRef, new Agent_PropertyLast(playerRef) )
+          }
+          var s3 = new RadioMenuItem("Offensive-Money")
+          s3.action = Action("Offensive-Money"){ 
+            Menu.setStrategy( playerRef, new Agent_OffensiveMoney(playerRef) )
+          }
+          var s4 = new RadioMenuItem("Offensive-Property")
+          s4.action = Action("Offensive-Property"){ 
+            Menu.setStrategy( playerRef, new Agent_OffensiveProperty(playerRef) )
+          }
+          bgGrace.buttons += s1
+          bgGrace.buttons += s2
+          bgGrace.buttons += s3
+          bgGrace.buttons += s4
+          bgGrace.select(s1)
+          contents ++= bgGrace.buttons
+        }
+        contents += new Menu("Erik") {
+          val playerRef = PlayerOrder.find(p => {p.name == "Erik"}).get
+          var s1 = new RadioMenuItem("Property-First")
+          s1.action = Action("Property-First"){ 
+            Menu.setStrategy( playerRef, new Agent_PropertyFirst(playerRef) )
+          }
+          var s2 = new RadioMenuItem("Property-Last")
+          s2.action = Action("Property-Last"){ 
+            Menu.setStrategy( playerRef, new Agent_PropertyLast(playerRef) )
+          }
+          var s3 = new RadioMenuItem("Offensive-Money")
+          s3.action = Action("Offensive-Money"){ 
+            Menu.setStrategy( playerRef, new Agent_OffensiveMoney(playerRef) )
+          }
+          var s4 = new RadioMenuItem("Offensive-Property")
+          s4.action = Action("Offensive-Property"){ 
+            Menu.setStrategy( playerRef, new Agent_OffensiveProperty(playerRef) )
+          }
+          bgErik.buttons += s1
+          bgErik.buttons += s2
+          bgErik.buttons += s3
+          bgErik.buttons += s4
+          bgErik.select(s1)
+          contents ++= bgErik.buttons
+        }
+      }
+    }
     contents = gameArea
     centerOnScreen
     //preferredSize = new Dimension(1600,1000)
-    visible = true    
+    visible = true  
   }
   
   //******* update *******   
