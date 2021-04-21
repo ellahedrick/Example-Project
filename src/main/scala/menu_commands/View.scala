@@ -30,14 +30,14 @@ class View {
   val buttons = new BoxPanel(Orientation.Horizontal) {
     contents += new Button(Action("Initialize Game") { 
       controller.get.initializeGame
+      controller.get.showGame
     })
     contents += new Button(Action("Do Turn") { 
       controller.get.doTurn
+      controller.get.showGame
     })
     contents += new Button(Action("Do Game") { 
       controller.get.doGame
-    })
-    contents += new Button(Action("Show Game") { 
       controller.get.showGame
     })
     contents += new Button(Action("Reset") { 
@@ -184,7 +184,7 @@ class View {
       case ("Blu Park Place", _) => "parkPlace"
       case ("Grn N Car. Ave", _) => "northCarolina"
       case ("Grn Pacifc Ave", _) => "pacific"
-      case ("Grn Pnslyv Ave", _) => "pennsylvania"
+      case ("Grn Pnslyv Ave", _) => "pennsylvaniaAve"
       case ("Cyn Connec Ave", _) => "connecticut"
       case ("Cyn Orient Ave", _) => "oriental"
       case ("Cyn Vermnt Ave", _) => "vermont"
@@ -197,7 +197,7 @@ class View {
       case ("RRd Short Line", _) => "shortLineRailroad"
       case ("RRd B & O RRd ", _) => "boRailroad"
       case ("RRd Readng RRd", _) => "readingRailroad"
-      case ("RRd Pnsylv RRd", _) => "pennsylvaniaRailroad"
+      case ("RRd Pnslyv RRd", _) => "pennsylvaniaRailroad"
       case ("Red Kentky Ave", _) => "kentucky"
       case ("Red Indian Ave", _) => "indian"
       case ("Red Ilnois Ave", _) => "illinois"
@@ -215,33 +215,71 @@ class View {
         for(card <- PlayerOrder(0).hand){
           handImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
         }
+        for(card <- PlayerOrder(0).bank){
+          bankImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+        }
+        for(card <- PlayerOrder(0).properties){
+          propertyImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+        }
       }
       if(PlayerOrder(1).name == name){
-        println("here1")
         for(card <- PlayerOrder(1).hand){
-          println("names")
           handImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+        }
+        for(card <- PlayerOrder(1).bank){
+          bankImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+        }
+        for(card <- PlayerOrder(1).properties){
+          propertyImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
         }
       }
       if(PlayerOrder(2).name == name){
         for(card <- PlayerOrder(2).hand){
           handImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
         }
+        for(card <- PlayerOrder(2).bank){
+          bankImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+        }
+        for(card <- PlayerOrder(2).properties){
+          propertyImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+        }
       }
       if(PlayerOrder(3).name == name){
         for(card <- PlayerOrder(3).hand){
-          
           handImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+        }
+        for(card <- PlayerOrder(3).bank){
+          bankImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
+        }
+        for(card <- PlayerOrder(3).properties){
+          propertyImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
         }
       }
       //println("repainting panel")
-      var offset = 100
+      var xOffset = 100
+      var yOffset = 0
       //println(handImages.length)
       for (image <- handImages) {
         //println(images.length)
-        if (name == "Rocco" || name == "Erik") g.drawImage(image, 0, offset, null)
-        else g.drawImage(image, offset+500, 0, null)
-        offset += 90
+        if (name == "Rocco" || name == "Erik") g.drawImage(image, xOffset, 0, null)
+        else g.drawImage(image, xOffset + 500, 0, null)
+        xOffset += 90
+      }
+      xOffset = 100
+      yOffset = 100
+      for (image <- bankImages) {
+        //println(images.length)
+        if (name == "Rocco" || name == "Erik") g.drawImage(image, xOffset, yOffset, null)
+        else g.drawImage(image, xOffset+500, yOffset, null)
+        xOffset += 90
+      }
+      xOffset = 100
+      yOffset = 200
+      for (image <- propertyImages) {
+        //println(images.length)
+        if (name == "Rocco" || name == "Erik") g.drawImage(image, xOffset, yOffset, null)
+        else g.drawImage(image, xOffset+500, yOffset, null)
+        xOffset += 90
       }
       handImages.clear
       propertyImages.clear
