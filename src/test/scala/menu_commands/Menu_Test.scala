@@ -100,16 +100,7 @@ class Menu_Test extends FunSpec with Matchers {
       
       
       it("can DO MOVE, causing the player at the front of the player order to take a turn") {
-        //Menu.initialize
         Menu.doMove
-        //println("Hand: ")
-        //for(c <- PlayerOrder.current.hand) println(c.name)
-        //println("Props: ")
-        //for(c <- PlayerOrder.current.properties) println(c.name)
-        //println("Bank: ")
-        //for(c <- PlayerOrder.current.bank) println(c.name)
-        
-        //println("AAA"+Menu.showGameArea)
         val expectedResultMove =
         "Board: (Will look much better once GUI is implemented)\n"+
 "[                        ][                        ][                        ][                        ][                        ][                        ][                        ][     Money     (a): $3m ][    Property   (a): $3m ][    -Money-    (m): $5m ][    -Money-    (m): $1m ][                        ][                        ][                        ][                        ][                        ][                        ][                        ][                        ][                        ][                        ]\n"+
@@ -205,7 +196,7 @@ class Menu_Test extends FunSpec with Matchers {
       
       //*********DO STRATEGY GAME***********************
       it("can do a game with different strategies for each player, that ends when a player wins") {
-        val expectedResult = "Rocco"
+        val expectedResult = "Grace"
         Menu.initialize
         Menu.doGame should be (expectedResult)
       }

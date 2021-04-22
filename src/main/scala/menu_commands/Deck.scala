@@ -5,9 +5,14 @@ import scala.util.Random
    */
 object Deck extends scala.collection.mutable.Queue[Card] {
   
+  /** the seed to use for randomness */
   val seed = 16
   scala.util.Random.setSeed(seed)
+  
+  /** the discard pile */
   var discard = new scala.collection.mutable.Queue[Card]
+  
+  /** a default deck to use when randomness is unwanted */
   var fixedDeck = new scala.collection.mutable.Queue[Card]
   
   
@@ -18,10 +23,8 @@ object Deck extends scala.collection.mutable.Queue[Card] {
     this.clear
     if(!Menu.useRandom && !fixedDeck.isEmpty){
       for (card <- fixedDeck) this += card
-      println("using fixedDeck")
       return
     }
-    println("NOT using fixedDeck")
     for(i <- 1 to 1) this += new Card("    -Money-   ",'m',10)
     for(i <- 1 to 2) this += new Card("    -Money-   ",'m',5)
     for(i <- 1 to 3) this += new Card("    -Money-   ",'m',4)
@@ -87,37 +90,14 @@ object Deck extends scala.collection.mutable.Queue[Card] {
 
   /** shuffle the deck
    */
-  
   def shuffle {
-      //if(Menu.useRandom) scala.util.Random.setSeed(seed)
       for (card <- discard) this += card
       var shuffled = new scala.collection.mutable.Queue[Card]
       shuffled = scala.util.Random.shuffle(this)
-      //if(Menu.useRandom) shuffled = scala.util.Random.shuffle(this)
-      //else for(card <- this) shuffled += card
-         
-      //val shuffled = scala.util.Random.shuffle(this)
       this.clear
       discard.clear
       for (card <- shuffled) this += card
   }
   
-  /** [Will not be needed in the final game, purely for testing purposes]
-   */
-  def debug = {
-    
-    //Show actual deck
-    for (card <- this.toArray){
-      println(card.show)
-    }
-    
-    //Show random code snippet to ease generating a new fixed order
-    //for (card <- util.Random.shuffle(this).toArray) 
-    //  println("this += new Card(\"" + card.name + "\",\'" + card.variant.toString + "\',"+card.value.toString+")")
-
-    //Show random card output
-    //for (card <- util.Random.shuffle(this).toArray) 
-    //  println(card.show)
-      
-  }
+  
 }

@@ -5,8 +5,11 @@ package menu_commands
 object Board {
 
   // create the 21 x 21 collection of cells
+  /** The number of rows in the game board */
   val rows = 21
-  val cols = 21  
+  /** The number of columns in the game board */
+  val cols = 21 
+  /** The array to hold all of the cells in the game board */
   val cells = Array.ofDim[Cell](rows, cols)
   for {  i <- 0 until rows
          j <- 0 until cols

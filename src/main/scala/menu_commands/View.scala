@@ -14,16 +14,34 @@ import scala.swing.Orientation
 
 
 //******* VIEW ******* 
+/** A view that holds all of the structure/layout for the GUI
+*
+*/
 class View {
 
+  /** the controller that the view communicates with in the MVC architecture */
   var controller: Option[Controller] = None
+  
+  /** the model that the view communicates with in the MVC architecture */
   var model: Option[Model] = None
+  
+  /** a buttongroup to allow only 1 strategy to be set at a time */
   var bgEmma = new ButtonGroup()
+  
+  /** a buttongroup to allow only 1 strategy to be set at a time */
   var bgRocco = new ButtonGroup()
+  
+  /** a buttongroup to allow only 1 strategy to be set at a time */
   var bgGrace = new ButtonGroup()
+  
+  /** a buttongroup to allow only 1 strategy to be set at a time */
   var bgErik = new ButtonGroup()
 
-  //******* init *******  
+  //******* init *******
+  /** initializes the view 
+   *  @param ctr the controller associated with the view
+   *  @param mod the model associated with the view
+   */
   def init(ctr: Controller, mod: Model) {
     controller = Some(ctr)
     model = Some(mod)    
@@ -31,6 +49,7 @@ class View {
   
   
   //******* View components ******* 
+  /** buttons to be shown at the bottom of the screen */
   val buttons = new BoxPanel(Orientation.Horizontal) {
     contents += new Button(Action("Initialize Game") { 
       controller.get.initializeGame
@@ -51,13 +70,14 @@ class View {
       controller.get.exit
     })  }
     
-    
+  
   var flippedCard = new CardPanel
 
   val hiddenDeck = new HiddenCardPanel
   
   val winnerDeck = new WinnerPanel
-  
+ 
+  /** a container for the board and deck graphics */
   val deckSpaces = new BoxPanel(Orientation.Horizontal) {
     if(Menu.hasWinner) {
       contents += winnerDeck
@@ -70,7 +90,7 @@ class View {
     preferredSize = new Dimension(300,200)
   }
 
-  
+  /** a labeled area for each player's cards */
   val cardSpaces = new BorderPanel {    
     layout += new Label("Erik") -> West      
     layout += new Label("Emma") -> North
@@ -79,6 +99,7 @@ class View {
     layout += deckSpaces -> Center    
   }
   
+  /** a container for each of the player's held cards */
   val playerHands = new ArrayBuffer[PlayerHandPanel] {
 
     this += new PlayerHandPanel("Emma")
@@ -88,6 +109,7 @@ class View {
     
   }
 
+  /** graphics for the bottom of the screen */
   val south = new BoxPanel(Orientation.Vertical) {
     preferredSize = new Dimension(800,300)
     contents += playerHands(2)
@@ -95,6 +117,7 @@ class View {
     opaque = false
   }  
   
+  /** graphics for the center of the screen */
   val gameArea = new BorderPanel {
     background = Color.darkGray
     layout += south -> South
@@ -104,7 +127,8 @@ class View {
     layout += cardSpaces -> Center  
   }
 
-  //******* MainFrame *******   
+  //******* MainFrame *******
+  /** the MainFrame of the GUI */
   val frame = new MainFrame {
     title = "Card Game"
     menuBar = new MenuBar {
@@ -240,17 +264,17 @@ class View {
     visible = true  
   }
   
-  //******* update *******   
+  //******* update *******
+  /** updates the view to replace old graphics with the proper content */
   def update {
     frame.repaint
-    println("repainting")
     for(panel <- playerHands) panel.repaint
     flippedCard.repaint
   }
 
   
   //******* CARDPANEL ******* 
-    
+  /** A panel to be shown when a player wins the game */  
   class WinnerPanel extends Panel {
     var image = javax.imageio.ImageIO.read(new java.io.File("resources/empty.jpg"))
     if(Menu.hasWinner){
@@ -261,6 +285,7 @@ class View {
     }
   }
   
+  /** a panel for displaying card information */
   class CardPanel extends Panel {
     var image = javax.imageio.ImageIO.read(new java.io.File("resources/empty.jpg"))
     
@@ -280,7 +305,8 @@ class View {
     }
   }
 
-  //******* HIDDENCARDPANEL *******   
+  //******* HIDDENCARDPANEL *******
+  /** a panel for holding the hidden cards */
   class HiddenCardPanel extends Panel {
 
     var image = javax.imageio.ImageIO.read(new java.io.File("resources/back.jpg"))
@@ -300,6 +326,10 @@ class View {
     }
   }     
  
+  /** gets the filename of a given card
+   *  @param cardName the name of the card
+   *  @param cardMoney the value of the card
+   */
   def getFile(cardName: String, cardMoney: Int): String = (cardName, cardMoney) match {
     case ("    -Money-   ", 1) => "1m"
     case ("    -Money-   ", 2) => "2m"
@@ -353,6 +383,7 @@ class View {
   }  
   
   //******* PLAYERHANDPANEL ******* 
+  /** a panel to hold the player's cards */
   class PlayerHandPanel(name: String) extends Panel {
 
     preferredSize = new Dimension(800, 300)
@@ -372,7 +403,6 @@ class View {
       }
       else{
         if(PlayerOrder(0).name == name){
-          //println(PlayerOrder(0).hand.length)
           for(card <- PlayerOrder(0).hand){
             handImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
           }
@@ -416,12 +446,9 @@ class View {
             propertyImages += javax.imageio.ImageIO.read(new java.io.File("resources/" + getFile(card.name, card.value) + ".jpg"))
           }
         }
-        //println("repainting panel")
         var xOffset = 100
         var yOffset = 0
-        //println(handImages.length)
         for (image <- handImages) {
-          //println(images.length)
           if (name == "Rocco" || name == "Erik") g.drawImage(image, xOffset, 0, null)
           else g.drawImage(image, xOffset + 500, 0, null)
           xOffset += 90
@@ -429,7 +456,6 @@ class View {
         xOffset = 100
         yOffset = 100
         for (image <- bankImages) {
-          //println(images.length)
           if (name == "Rocco" || name == "Erik") g.drawImage(image, xOffset, yOffset, null)
           else g.drawImage(image, xOffset+500, yOffset, null)
           xOffset += 90
@@ -437,7 +463,6 @@ class View {
         xOffset = 100
         yOffset = 200
         for (image <- propertyImages) {
-          //println(images.length)
           if (name == "Rocco" || name == "Erik") g.drawImage(image, xOffset, yOffset, null)
           else g.drawImage(image, xOffset+500, yOffset, null)
           xOffset += 90

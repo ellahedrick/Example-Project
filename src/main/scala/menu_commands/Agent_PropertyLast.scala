@@ -1,5 +1,9 @@
 package menu_commands
 
+/** An Agent that plays defensively to protect properties from other players
+*  
+*  @constructor player the player associated with this strategy
+*/
 class Agent_PropertyLast(override val player: Player) extends Strategy(player) {
   
   /** show the name of the strategy
@@ -17,13 +21,10 @@ class Agent_PropertyLast(override val player: Player) extends Strategy(player) {
     
     var counter = 0
     
-    
     for (card <- player.hand){
       if(counter < 3 && card.variant == 'm'){
         player.bank = player.bank :+ card
-        //println("BANK" + curPlay.bank)
         player.hand = player.hand.filter(_ != card)
-        //println("Hand5" + curPlay.hand)
         counter +=1
       }
     }
@@ -39,10 +40,7 @@ class Agent_PropertyLast(override val player: Player) extends Strategy(player) {
     for (card <- player.hand){
       if(counter < 3 && card.variant == 'p'){
         player.properties = player.properties :+ card
-        //println("PPPP" + curPlay.hand)
-
         player.hand = player.hand.filter(_ != card)
-        //println("CCCCC" + curPlay.hand)
         counter +=1
       }
     }
@@ -52,7 +50,6 @@ class Agent_PropertyLast(override val player: Player) extends Strategy(player) {
       player.hand = player.hand :+ Deck.deal
       player.hand = player.hand :+ Deck.deal
     }
-    //println("FINAL:" + curPlay.hand)
   }
   
 }

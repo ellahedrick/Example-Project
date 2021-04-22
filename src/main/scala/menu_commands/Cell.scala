@@ -5,6 +5,8 @@ package menu_commands
 *  @constructor create a new cell
 */
 class Cell {
+  /** The card held by the cell (if any)
+   */
   var card : Option[Card] = None
 
   /** Return the string representation of the cell

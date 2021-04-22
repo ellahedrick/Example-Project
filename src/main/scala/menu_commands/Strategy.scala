@@ -1,9 +1,11 @@
 package menu_commands
 
+/** An Agent blueprint for creating AI agents, cannot be used as-is
+*  
+*  @constructor player the player associated with this strategy
+*/
 class Strategy(val player: Player) {
-  
-  //insert universal def's here
-  
+    
   /** play the current turn
    */
   def doMove: Unit = {

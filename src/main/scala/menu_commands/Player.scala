@@ -6,12 +6,18 @@
 *  @param name the player's name
 */
 class Player (val name : String) {
+  
+  /** the player's hand */
   var hand: List[Card] = List()
+  
+  /** the player's properties */
   var properties: List[Card] = List()
+  
+  /** the player's bank */
   var bank: List[Card] = List()
+  
+  /** the player's current strategy (default Property-First) */
   var strategy: Strategy = new Agent_PropertyFirst(this)
-  
-  
   
   
   /** check whether the game was won after the turn

@@ -5,8 +5,14 @@ import PlayerOrder._
 /** creates the menu object
    */
 object Menu {
+  
+  /** a variable that denotes whether the game has ended or not */
   var gameOver = false
+  
+  /** a variable that holds the name of the winner, once one is reached */
   var winner = ""
+  
+  /** a variable that denotes whether the game will use randomness or not */
   var useRandom = false
   
   /** initializes the game by dealing cards to each player (will eventually shuffle the deck as well)
@@ -14,7 +20,6 @@ object Menu {
   def initialize: Unit = {
     gameOver = false
     winner = ""
-    println("initializing")
     while(!Deck.isEmpty) Deck.dequeue
     Deck.createDeck
     
@@ -73,7 +78,6 @@ object Menu {
   /** run through one iteration of each player's move
    */
   def doTurn: Unit = {
-    println("doing Turn")
      for(i <- 0 until 4){
        if(gameOver == false){
          PlayerOrder.current.doMove
@@ -87,9 +91,7 @@ object Menu {
   /** run the entire game and return the name of the winner
    */
   def doGame: String = {
-    println("doing game")
     while(gameOver == false) doTurn
-    println(Menu.winner)
     Menu.winner
   }
   
