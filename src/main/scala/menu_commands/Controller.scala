@@ -25,6 +25,9 @@ class Controller(view: View, model: Model) {
   /** initializes the game by telling the model to initializeGame */
   def initializeGame = model.initializeGame
 
+  /** executes a move by telling the model to doMove */
+  def doMove = model.doMove
+  
   /** executes a turn by telling the model to doTurn */
   def doTurn = model.doTurn
 

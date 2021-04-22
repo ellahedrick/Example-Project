@@ -58,6 +58,10 @@ class View {
     contents += new Button(Action("Advance Player Order") { 
       controller.get.advancePlayerOrder
     })
+    contents += new Button(Action("Do Move") { 
+      controller.get.doMove
+      controller.get.showGame
+    })
     contents += new Button(Action("Do Turn") { 
       controller.get.doTurn
       controller.get.showGame
