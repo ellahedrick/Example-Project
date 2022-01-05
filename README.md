@@ -1,3 +1,5 @@
+**THIS PROJECT WAS A COLLABORATION WITH CDT HANS FOTTA, WEST POINT '22. IT WAS THE CULMINATING PROJECT OF OUR CS403 COURSE**
+
 GAME RULES
 
 Monopoly Deal is a four-**player**, simplified card game version of the board game Monopoly.
